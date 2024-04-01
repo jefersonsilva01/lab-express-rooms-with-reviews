@@ -1,0 +1,10 @@
+<h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
+
+{{#each posts}}
+  <a href="/post-details/{{_id}}">
+    <h1>Creator: {{creatorId.0.username}}</h1>
+    <img src="{{picPath}}" alt="Image" />
+    <p>{{content}}</p>
+  </a>
+{{/each}}

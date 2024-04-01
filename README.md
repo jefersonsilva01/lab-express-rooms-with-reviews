@@ -1,128 +1,80 @@
 ![logo_ironhack_blue 7](https://user-images.githubusercontent.com/23629340/40541063-a07a0a8a-601a-11e8-91b5-2f13e4e6b441.png)
 
-# Rooms App with Reviews - final practice for project #2
-
-<br><br>
+# LAB | Express IronTumblr
 
 ## Introduction
 
-<br>
+We have learned how to upload files and now is the time to practice this a bit more.
 
-In previous lessons, we covered all the basics one full-stack app can have. Now is the time for you to implement all these features one more time.
+## Requirements
 
-<br>
+- Fork this repo
+- Clone this repo
+
+## Submission
+
+Upon completion, run the following commands:
+
+```
+$ git add .
+$ git commit -m "done"
+$ git push origin master
+```
+
+Create Pull Request so your TAs can check up your work.
 
 ## Instructions
 
-The app needs to have users (signup, login, and logout functionality) and full CRUD on at least one of the models, but that one model can't be just users (you can have CRUD on users as well, but that can't be the only one). So let's summarize the requirements:
+[Tumblr](tumblr.com) is an ultra-popular micro-blogging website.
 
-- **Models**: User, Room, Reviews
-- **Routes**: auth, rooms, reviews, users (optional, in case you want to add CRUD on users as well)
-- **Views**: all the necessary pages so the users can auth themselves and do the CRUD. For easier navigation through your files and consistent naming please organize all the pages into folders (ex. _auth-views_, _room-views_, _comment-views_, ...)
+**A micro-blog is:** a social media site to which a user makes short, frequent posts.
 
-<br>
+This is easier shown than described, so check out [this tumblr](http://bestdogmemes.tumblr.com/) filled with funny dog memes.
 
-### Iteration 0 | Create the project
+### Iteration 1 | User Profile Picture
 
-Once more, let's use our friend `IronLauncher` and create a new app:
+We have already provided you with the _user_ model, as well as fully functional authentication logic. However, one thing is missing. The user doesn't have a profile picture. Add a new property to the user model, and fix user registration so that it allows the user to upload a profile picture.
 
-```bash
-$ ironlauncher rooms-app
-$ cd rooms-app
-$ npm run dev
-```
+### Iteration 2 | Posts
 
-<br>
+In this iteration, create the bread and butter of the IronTumblr - the posts.
 
-## Iteration #1: The Signup & Login & Logout Features
+First, create a `Post` model. A post should have the following attributes:
 
-Our app will have users, and they will use `email` and `password` to authenticate themselves. They will also have to input their full name when signing in. In addition to this way, please feel free to use any of the social strategies (this is a bonus feature).
+- `content` - the text belonging to the post
+- `creatorId` - ObjectId of the post's creator (the user who created a post)
+- `picPath` - where the picture is stored
+- `picName` - the picture's name
 
-So your user schema should look somewhat like this:
+For this iteration, besides the model, you have to create:
 
-```js
-const userSchema = new Schema(
-  {
-    email: String,
-    password: String,
-    fullName: String,
-    // slack login - optional
-    slackID: String,
-    // google login - optional
-    googleID: String
-  },
-  {
-    timestamps: true
-  }
-);
-```
+- the GET route to display the **post-form**,
+- the POST route to actually **create** the post (this route should include file uploading),
+- the GET route to display the **posts** and
+- the GET route to display **post-details**.
 
-Now create all the routes and views needed to have users successfully signup/login/logout. For auth, you can use `passport.js` and its local strategy or the `sessions & cookies` setup.
+**A user should be logged in to create a post, but _not_ to view it.** (Check the `isLoggedIn.js` file in the _middlewares_ folder.)
 
-💡 Make sure you install all the packages:
+The **posts** will be the home page, and simply display all of the posts on the website.
 
-For `passport.js`: _bcrypt_, _passport_, _passport-local_,
+### Bonus: Iteration 3 | Comments
 
-For `sessions & cookies`: _bcryptjs_, _express-session_, _connect-mongo_.
+Posts should have comments attached to them. Create the `Comment` model as a sub-document of the `Post`.
+A comment _can_ have images attached to it, but not all do, so it is not required.
 
-And if you have `social login`: _passport-google-oauth_ and/or _passport-slack_.
+The `Comment` model should have the following attributes:
 
-**Hint**: You have already everything set up in the previous lessons + class examples, be resourceful 🥳.
+- `content`
+- `authorId`
+- `imagePath`
+- `imageName`
 
-<br>
+You should create routes to create new comments. Comments should be displayed on the details page of a single post.
 
-## Iteration #2: The CRUD on the `room` model
+### Bonus: Iteration 4 | Deployment
 
-Great, we have users so let's start adding some more functionality to our app.
-Our rooms will have following schema:
+The last step in IronTumblr should be to deploy the app to Heroku. Don't forget to deploy your database on MongoLab/Mongo Atlas.
 
-```js
-const roomSchema = new Schema({
-  name: { type: String },
-  description: { type: String },
-  imageUrl: { type: String },
-  owner: { type: Schema.Types.ObjectId, ref: "User" },
-  reviews: [] // we will update this field a bit later when we create review model
-});
-```
-
-Our users can:
-
-- create new rooms only when logged in
-- edit and delete the rooms only if they created them (if they are the owners)
-- see the list of the rooms even though they are not logged in
-
-Please proceed to create all the routes and files necessary to display forms and see the results after the submission.
-
-<br>
-
-## Iteration #3: The `review` model and (optional) CRUD on it
-
-Great, you already have a fully functioning CRUD app with users but we will go one more step: let's create _reviews section_ for each room.
-
-The review schema can look like this:
-
-```js
-const reviewSchema = new Schema({
-  user: { type: Schema.Types.ObjectId, ref: "User" },
-  comment: { type: String, maxlength: 200 }
-});
-```
-
-Now we can go ahead and update `reviews` property in the _roomSchema_:
-
-```js
-// ...
-reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }];
-// ...
-```
-
-Our users can:
-
-- when logged in, make reviews for all the rooms but the ones they created
-- when logged in, edit and/or delete their comments (optional)
-- when logged out, see the rooms and all the comments
-
-<br><br>
+Your site should be live and functioning with a working public URL.
 
 **Happy coding!** :heart:
