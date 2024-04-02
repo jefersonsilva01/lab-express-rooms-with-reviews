@@ -1,0 +1,14 @@
+<h1>Create room</h1>
+
+<form action="/new-room" method="POST" enctype="multipart/form-data">
+  <label>Name</label>
+  <input type="text" name="name" placeholder="Room name" />
+
+  <label>Description</label>
+  <textarea name="description" cols="30" rows="10"></textarea>
+
+  <label>Image</label>
+  <input type="file" name="image" />
+
+  <button type="submit">New room</button>
+</form>

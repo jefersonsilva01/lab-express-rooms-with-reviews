@@ -1,6 +1,8 @@
 {{#if user}}
   <h2>Welcome, {{user.fullname}}!</h2>
   <p>This is your profile page my friend! And your email is: {{user.email}}</p>
+  <br /><br />
+  <a href="/rooms">Rooms</a>
 {{else}}
   <p>Still no logged in user, sorry!</p>
 {{/if}}
