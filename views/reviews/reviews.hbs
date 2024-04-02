@@ -1,0 +1,9 @@
+<h1>Reviews</h1>
+
+<a href="/add-review/{{roomID}}">New Review</a>
+
+{{#each reviews}}
+  <h2>{{fullname}}</h2>
+  <p>{{comment}}</p>
+  <br /><br />
+{{/each}}

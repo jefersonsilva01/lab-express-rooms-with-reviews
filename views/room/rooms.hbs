@@ -3,7 +3,7 @@
 <a href="/new-room">New room</a>
 
 {{#each allRooms}}
-  <h2>Name: {{name}}</h2>
+  <h2>Name: <a href="/reviews/{{_id}}">{{name}}</a></h2>
   <p>Owner: {{owner.fullname}}</p>
   <p>Description: {{description}}</p>
   <img src="{{imageUrl}}" alt="Image" />
